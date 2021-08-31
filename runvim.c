@@ -11,12 +11,13 @@ int main(int argc, char **argv) {
   char full_executable[ARG_MAX];
   snprintf(full_executable, ARG_MAX, "%s/%s", TOOL_PATH, executable_name);
 
-  char **new_argv = (char **) malloc (sizeof(char*) * (argc+1));
+  char **new_argv = (char **) malloc (sizeof(char*) * (argc+2));
   new_argv[0] = "/bin/sh";
   new_argv[1] = full_executable;
   for (int i=1; i<argc; i++) {
     new_argv[i+1] = argv[i];
   }
+  new_argv[argc+1] = NULL;
 
   if (execv("/bin/sh", new_argv)) {
     perror(argv[0]);
